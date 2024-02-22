@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Carousel } from 'antd';
+import { Layout } from 'antd';
+import MyCard from './card';
+import { api } from './API';
+
+const { Header } = Layout;
+
+const headerStyle = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 64,
+  backgroundColor: 'black',
+};
 
 function App() {
+
+  useEffect(() => {
+    api.getWeather("jakarta").then((response) => {
+      console.log(response);
+    });
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header style={headerStyle}>
+        <div className="demo-logo" >
+          <p>Weather app</p>
+        </div>
+      </Header>
+      <div style={{ background: "#101010" }}>
+        <Carousel autoplay>
+          <MyCard temp="20" weather="sunny"></MyCard>
+          <MyCard temp="20" weather="cloudy"></MyCard>
+          <MyCard temp="20" weather="rainy"></MyCard>
+        </Carousel>
+      </div>
+
     </div>
   );
 }
